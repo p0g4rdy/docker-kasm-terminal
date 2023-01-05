@@ -12,7 +12,7 @@ WORKDIR $HOME
 
 RUN apt-get update && apt-get install -y tmux screen nano dnsutils zip
 
-RUN apt-get install -y iputils-ping traceroute
+RUN apt-get install -y iputils-ping traceroute telnet
 
 RUN echo "set -g mouse on" > $HOME/.tmux.conf && chown 1000:1000  $HOME/.tmux.conf
 
@@ -22,14 +22,6 @@ then \n\
     set +e \n\
     eval \${SHELL_EXEC} \n\
 fi  " >> $HOME/.bashrc && chown 1000:1000  $HOME/.bashrc
-
-### Install Ansible
-COPY ./src/ubuntu/install/ansible $INST_SCRIPTS/ansible/
-RUN bash $INST_SCRIPTS/ansible/install_ansible.sh  && rm -rf $INST_SCRIPTS/ansible/
-
-### Install Terraform
-COPY ./src/ubuntu/install/terraform $INST_SCRIPTS/terraform/
-RUN bash $INST_SCRIPTS/terraform/install_terraform.sh  && rm -rf $INST_SCRIPTS/terraform/
 
 COPY ./src/ubuntu/install/terminal/custom_startup.sh $STARTUPDIR/custom_startup.sh
 RUN chmod +x $STARTUPDIR/custom_startup.sh
