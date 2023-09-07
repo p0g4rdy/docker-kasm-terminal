@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y tmux screen nano dnsutils zip
 
 RUN apt-get install -y iputils-ping traceroute telnet
 
+RUN echo "HostKeyAlgorithms = +ssh-rsa" >> /etc/ssh/ssh_config.d/ssh-rsa && echo "PubkeyAcceptedAlgorithms = +ssh-rsa" >> /etc/ssh/ssh_config.d/ssh-rsa
+
 RUN echo "set -g mouse on" > $HOME/.tmux.conf && chown 1000:1000  $HOME/.tmux.conf
 
 ### Update .bashrc to run an arbitrary command if specified as an environment variable
